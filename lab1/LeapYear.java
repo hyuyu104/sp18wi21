@@ -8,6 +8,7 @@ public class LeapYear {
      */
 
     public static boolean isLeapYear(int year) {
+        /* return a boolean value based on whether the input is a leap year */
         if (year % 400 == 0) {
             return true;
         } else if ((year % 4 == 0) && (year % 100 != 0)) {
