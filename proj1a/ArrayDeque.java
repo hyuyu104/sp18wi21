@@ -44,8 +44,6 @@ public class ArrayDeque<T> {
         }
         int index = (findex + items.length - 1) % items.length;
         items[index] = item;
-        System.out.println("added index: " + ((findex + size) % items.length));
-        System.out.println("findex: " + findex);
         findex = index;
         size = size + 1;
     }
@@ -58,8 +56,6 @@ public class ArrayDeque<T> {
             resize(size * 2);
         }
         items[(findex + size) % items.length] = item;
-        System.out.println("added index: " + ((findex + size) % items.length));
-        System.out.println("findex: " + findex);
         size = size + 1;
     }
 
@@ -128,24 +124,5 @@ public class ArrayDeque<T> {
             System.out.print(items[i % items.length] + " ");
         }
         System.out.println();
-    }
-
-    public static void main(String[] args) {
-        ArrayDeque<Integer> L = new ArrayDeque<>();
-        L.addFirst(10);
-        L.addFirst(5);
-        L.addFirst(0);
-        L.addLast(15);
-        L.addLast(20);
-        L.addLast(25);
-        System.out.println("removeFirst: " + L.removeFirst());
-        System.out.println("removeFirst: " + L.removeFirst());
-        L.printDeque();
-        System.out.println("removeLast: " + L.removeLast());
-        System.out.println("removeLast: " + L.removeLast());
-        System.out.println("size: " + L.size());
-        L.printDeque();
-        ArrayDeque<Integer> L2 = new ArrayDeque<>(L);
-        L2.printDeque();
     }
 }
