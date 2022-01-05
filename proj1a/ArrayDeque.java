@@ -68,7 +68,7 @@ public class ArrayDeque<T> {
      * and the length of the list is greater than or equal to 16 in order
      * to save memory*/
     private void saveResize() {
-        if (size/items.length < 0.25 & items.length >= 16) {
+        if (size / items.length < 0.25 & items.length >= 16) {
             resize(size + 1);
         }
     }
@@ -109,7 +109,7 @@ public class ArrayDeque<T> {
      * @return: an integer of the size of the list*/
     public int size() {
         if (size <= 0) {
-            return size;
+            return 0;
         }
         return size;
     }
