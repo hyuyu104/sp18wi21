@@ -5,7 +5,7 @@ public class ArrayDeque<T> {
 
     /* The constructor of ArrayDeque, will create an empty array of size 8.*/
     public ArrayDeque() {
-        items = (T[]) new Object[8];
+        items = (T[]) new Object[2];
         size = 0;
         findex = 0;
     }
@@ -28,8 +28,12 @@ public class ArrayDeque<T> {
      * @capacity: the expected length after resizing*/
     private void resize(int capacity) {
         T[] a = (T[]) new Object[capacity];
-        for (int i = findex; i < findex + size; i++) {
-            a[i - findex] = items[i % items.length];
+        int diff = items.length - findex;
+        if (size <= diff) {
+            System.arraycopy(items, findex, a, 0, size);
+        } else {
+            System.arraycopy(items, findex, a, 0, diff);
+            System.arraycopy(items, 0, a, diff, size - diff);
         }
         items = a;
         findex = 0;
@@ -77,6 +81,7 @@ public class ArrayDeque<T> {
         items[findex] = null;
         findex = (findex + 1) % items.length;
         size = size - 1;
+        size();
         saveResize();
         return returnItem;
     }
@@ -89,6 +94,7 @@ public class ArrayDeque<T> {
         T returnItem = items[index];
         items[index] = null;
         size = size - 1;
+        size();
         saveResize();
         return returnItem;
     }
@@ -105,7 +111,7 @@ public class ArrayDeque<T> {
      * @return: an integer of the size of the list*/
     public int size() {
         if (size <= 0) {
-            return 0;
+            size = 0;
         }
         return size;
     }
