@@ -1,4 +1,4 @@
-public class LinkedListDeque<T>{
+public class LinkedListDeque<T> {
 
     private class Node{
 
@@ -95,9 +95,9 @@ public class LinkedListDeque<T>{
      * size will return the current size of the list.
      * @return: an integer of the size of the list*/
     public int size() {
-    	if (size <= 0) {
-    		return 0;
-    	}
+        if (size <= 0) {
+            return 0;
+        }
         return size;
     }
 
@@ -121,7 +121,7 @@ public class LinkedListDeque<T>{
      * @return: the value of the ith item with a type of T*/
     private T getRecursive(int index, Node n) {
         if (index < 0) {
-        	return n.item;
+            return n.item;
         }
         return getRecursive(index - 1, n.next);
     }

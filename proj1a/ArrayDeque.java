@@ -1,14 +1,13 @@
 public class ArrayDeque<T> {
     private T[] items;
     private int size;
-    private int fsize;
-    private int bsize;
+    private int findex;
 
     /* The constructor of ArrayDeque, will create an empty array of size 8.*/
     public ArrayDeque() {
         items = (T[]) new Object[8];
-        fsize = 0;
-        bsize = 0;
+        size = 0;
+        findex = 0;
     }
 
     /**
@@ -27,35 +26,36 @@ public class ArrayDeque<T> {
     /**
      * resize items according to the length specified
      * @capacity: the expected length after resizing*/
-    private void resize(int capacity) {
-        T[] a = (T[]) new Object[capacity];
-        System.arraycopy(items, 0, a, 0, bsize);
-        System.arraycopy(items, items.length - fsize, a, a.length - fsize, fsize);
-        items = a;
+    private void resize(int capacity) {	
+    	return;
     }
 
     /**
      * addFirst will add an item of type T to the first postion of the list.
      * @item: item to be added of type T*/
     public void addFirst(T item) {
-        size = bsize + fsize;
-        if (size >= items.length) {
-            resize(size * 2);
-        }
-        items[items.length - fsize - 1] = item;
-        fsize = fsize + 1;
+    	if (size >= items.length) {
+    		resize(size * 2);
+    	}
+    	int index = (findex + items.length - 1) % items.length;
+    	items[index] = item;
+    	System.out.println("added index: " + ((findex + size) % items.length));
+    	System.out.println("findex: " + findex);
+    	findex = index;
+    	size = size + 1;
     }
 
     /**
      * addLast will add an item of type T to the last postion of the list.
      * @item: item to be added of type T*/
     public void addLast(T item) {
-        size = bsize + fsize;
-        if (size >= items.length) {
-            resize(size * 2);
-        }
-        items[bsize] = item;
-        bsize = bsize + 1;
+    	if (size >= items.length) {
+    		resize(size * 2);
+    	}
+    	items[(findex + size) % items.length] = item;
+    	System.out.println("added index: " + ((findex + size) % items.length));
+    	System.out.println("findex: " + findex);
+    	size = size + 1;
     }
 
     /**
@@ -63,61 +63,36 @@ public class ArrayDeque<T> {
      * and the length of the list is greater than or equal to 16 in order
      * to save memory*/
     private void saveResize() {
-        size = bsize + fsize;
-        if (size/items.length < 0.25 & items.length >= 16) {
-            resize(size + 1);
-        }
-    }
-
-    /**
-     * Transform the index into index corresponding to the underlying array
-     * @index: integer, input index
-     * @return: index corresponding to the underlying array*/
-    private int indexer(int index) {
-        if (index < fsize) {
-            fsize = fsize - 1;
-            return items.length - fsize + index;
-        }
-        bsize = bsize - 1;
-        return index - fsize;
+    	return;
     }
 
     /**
      * removeFirst will remove the first item from the list and return it.
      * @return: item removed of type T*/
-    public T removeFirst() {
-        T returnItem = items[indexer(0)];
-        items[indexer(0)] = null;
-        saveResize();
-        return returnItem;
-    }
+    // public T removeFirst() {
+    // }
 
     /**
      * removeLast will remove the last item from the list and return it.
      * @return: item removed of type T*/
-    public T removeLast() {
-        T returnItem = items[indexer(bsize + fsize - 1)];
-        items[indexer(bsize + fsize - 1)] = null;
-        saveResize();
-        return returnItem;
-    }
+    // public T removeLast() {
+    // }
 
     /**
      * isEmpty will determine whether the list is empty.
      * @return: boolean value based on whether the list is empty.*/
     public boolean isEmpty() {
-        return (fsize + bsize) <= 0;
+    	return size == 0;
     }
 
     /**
      * size will return the current size of the list.
      * @return: an integer of the size of the list*/
     public int size() {
-    	size = bsize + fsize;
     	if (size <= 0) {
-    		return 0;
+    		return size;
     	}
-        return size;
+    	return size;
     }
 
     /**
@@ -125,20 +100,25 @@ public class ArrayDeque<T> {
      * @index: the index of the item, integer
      * @return: the value of the ith item with a type of T*/
     public T get(int index) {
-        if (index < fsize) {
-            return items[items.length - fsize + index];
-        }
-        return items[index - fsize];
+    	return items[(findex + index) % items.length];
     }
 
     /* printDeque will print each item in the list, separating by space*/
     public void printDeque() {
-        for (int i = items.length - fsize; i < items.length; i++) {
-            System.out.print(items[i] + " ");
-        }
-        for (int i = 0; i < bsize; i++) {
-            System.out.print(items[i] + " ");
+        for (int i = findex; i < findex + size; i++) {
+        	System.out.print(items[i % items.length] + " ");
         }
         System.out.println();
+    }
+
+    public static void main(String[] args) {
+    	ArrayDeque<Integer> L = new ArrayDeque<>();
+    	L.addFirst(10);
+    	L.addFirst(5);
+    	L.addFirst(0);
+    	L.addLast(15);
+    	L.addLast(20);
+    	L.addLast(25);
+    	L.printDeque();
     }
 }
