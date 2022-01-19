@@ -25,17 +25,18 @@ public class ArrayDequeTest {
         input.removeLast();
         input.removeLast();
         input.removeLast();
-        input.addFirst(16);
-        input.addFirst(16);
-        input.addFirst(16);
+        input.removeLast();
+//        input.addFirst(16);
+//        input.addFirst(16);
+//        input.addFirst(16);
         return input;
     }
 
     public static void main(String[] args) {
         ArrayDeque<Integer> testDeque = regularAdd();
         testDeque.printDeque();
-        testDeque = regularRemove(testDeque);
-        testDeque.printDeque();
-//        randomAR(testDeque).printDeque();
+//        testDeque = regularRemove(testDeque);
+//        testDeque.printDeque();
+        System.out.println(randomAR(testDeque).size());
     }
 }

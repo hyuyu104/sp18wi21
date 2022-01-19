@@ -71,10 +71,10 @@ public class ArrayDeque<T> {
      * removeFirst will remove the first item from the list and return it.
      * @return: item removed of type T*/
     public T removeFirst() {
-        T returnItem = items[findex];
-        if (returnItem == null) {
+        if (size == 0) {
             return null;
         }
+        T returnItem = items[findex];
         items[findex] = null;
         findex = findex + 1;
         size = size - 1;
@@ -86,10 +86,10 @@ public class ArrayDeque<T> {
      * removeLast will remove the last item from the list and return it.
      * @return: item removed of type T*/
     public T removeLast() {
-        T returnItem = items[findex + size - 1];
-        if (returnItem == null) {
+        if (size == 0) {
             return null;
         }
+        T returnItem = items[findex + size - 1];
         items[findex + size - 1] = null;
         size = size - 1;
         saveResize();
