@@ -34,8 +34,8 @@ public class ArrayDequeTest {
     public static void main(String[] args) {
         ArrayDeque<Integer> testDeque = regularAdd();
         testDeque.printDeque();
-//        testDeque = regularRemove(testDeque);
-//        testDeque.printDeque();
-        randomAR(testDeque).printDeque();
+        testDeque = regularRemove(testDeque);
+        testDeque.printDeque();
+//        randomAR(testDeque).printDeque();
     }
 }

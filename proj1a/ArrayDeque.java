@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 public class ArrayDeque<T> {
     private T[] items;
     private int size;
@@ -30,9 +28,10 @@ public class ArrayDeque<T> {
      * @capacity: the expected length after resizing*/
     private void resize(int capacity) {
         T[] a = (T[]) new Object[capacity];
-        System.arraycopy(items, findex, a, 1, size);
+        int fidxNew = (capacity - size)/2;
+        System.arraycopy(items, findex, a, fidxNew, size);
         items = a;
-        findex = 1;
+        findex = fidxNew;
     }
 
     /**
@@ -40,7 +39,7 @@ public class ArrayDeque<T> {
      * @item: item to be added of type T*/
     public void addFirst(T item) {
         if (findex == 0) {
-            resize((size + 1) * 2);
+            resize(items.length * 2);
         }
         items[findex - 1] = item;
         findex = findex - 1;
@@ -52,7 +51,7 @@ public class ArrayDeque<T> {
      * @item: item to be added of type T*/
     public void addLast(T item) {
         if ((findex + size) >= items.length) {
-            resize((size + 1) * 2);
+            resize(items.length * 2);
         }
         items[findex + size] = item;
         size = size + 1;
@@ -73,10 +72,12 @@ public class ArrayDeque<T> {
      * @return: item removed of type T*/
     public T removeFirst() {
         T returnItem = items[findex];
+        if (returnItem == null) {
+            return null;
+        }
         items[findex] = null;
         findex = findex + 1;
         size = size - 1;
-        size();
         saveResize();
         return returnItem;
     }
@@ -86,9 +87,11 @@ public class ArrayDeque<T> {
      * @return: item removed of type T*/
     public T removeLast() {
         T returnItem = items[findex + size - 1];
+        if (returnItem == null) {
+            return null;
+        }
         items[findex + size - 1] = null;
         size = size - 1;
-        size();
         saveResize();
         return returnItem;
     }
@@ -106,9 +109,6 @@ public class ArrayDeque<T> {
     public int size() {
         if (size <= 0) {
             size = 0;
-        }
-        if ((findex + size) >= items.length) {
-            findex = 1;
         }
         return size;
     }
