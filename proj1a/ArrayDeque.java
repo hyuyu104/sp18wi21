@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class ArrayDeque<T> {
     private T[] items;
     private int size;
@@ -38,7 +40,7 @@ public class ArrayDeque<T> {
      * @item: item to be added of type T*/
     public void addFirst(T item) {
         if (findex == 0) {
-            resize(size * 2);
+            resize((size + 1) * 2);
         }
         items[findex - 1] = item;
         findex = findex - 1;
@@ -50,7 +52,7 @@ public class ArrayDeque<T> {
      * @item: item to be added of type T*/
     public void addLast(T item) {
         if ((findex + size) >= items.length) {
-            resize(size * 2);
+            resize((size + 1) * 2);
         }
         items[findex + size] = item;
         size = size + 1;
@@ -105,7 +107,7 @@ public class ArrayDeque<T> {
         if (size <= 0) {
             size = 0;
         }
-        if (findex >= items.length) {
+        if ((findex + size) >= items.length) {
             findex = 1;
         }
         return size;
@@ -116,13 +118,13 @@ public class ArrayDeque<T> {
      * @index: the index of the item, integer
      * @return: the value of the ith item with a type of T*/
     public T get(int index) {
-        return items[(findex + index) % items.length];
+        return items[findex + index];
     }
 
     /* printDeque will print each item in the list, separating by space*/
     public void printDeque() {
-        for (int i = findex; i < findex + size; i++) {
-            System.out.print(items[i % items.length] + " ");
+        for (int i = 0; i < size; i++) {
+            System.out.print(items[findex + i] + " ");
         }
         System.out.println();
     }
