@@ -5,9 +5,9 @@ public class ArrayDeque<T> {
 
     /* The constructor of ArrayDeque, will create an empty array of size 8.*/
     public ArrayDeque() {
-        items = (T[]) new Object[2];
+        items = (T[]) new Object[8];
         size = 0;
-        findex = 0;
+        findex = 1;
     }
 
     /**
@@ -28,27 +28,20 @@ public class ArrayDeque<T> {
      * @capacity: the expected length after resizing*/
     private void resize(int capacity) {
         T[] a = (T[]) new Object[capacity];
-        int diff = items.length - findex;
-        if (size <= diff) {
-            System.arraycopy(items, findex, a, 0, size);
-        } else {
-            System.arraycopy(items, findex, a, 0, diff);
-            System.arraycopy(items, 0, a, diff, size - diff);
-        }
+        System.arraycopy(items, findex, a, 1, size);
         items = a;
-        findex = 0;
+        findex = 1;
     }
 
     /**
      * addFirst will add an item of type T to the first postion of the list.
      * @item: item to be added of type T*/
     public void addFirst(T item) {
-        if (size >= items.length) {
+        if (findex == 0) {
             resize(size * 2);
         }
-        int index = (findex + items.length - 1) % items.length;
-        items[index] = item;
-        findex = index;
+        items[findex - 1] = item;
+        findex = findex - 1;
         size = size + 1;
     }
 
@@ -56,10 +49,10 @@ public class ArrayDeque<T> {
      * addLast will add an item of type T to the last postion of the list.
      * @item: item to be added of type T*/
     public void addLast(T item) {
-        if (size >= items.length) {
+        if ((findex + size) >= items.length) {
             resize(size * 2);
         }
-        items[(findex + size) % items.length] = item;
+        items[findex + size] = item;
         size = size + 1;
     }
 
