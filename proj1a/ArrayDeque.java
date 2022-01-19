@@ -28,7 +28,7 @@ public class ArrayDeque<T> {
      * @capacity: the expected length after resizing*/
     private void resize(int capacity) {
         T[] a = (T[]) new Object[capacity];
-        int fidxNew = (capacity - size)/2;
+        int fidxNew = (capacity - size) / 2;
         System.arraycopy(items, findex, a, fidxNew, size);
         items = a;
         findex = fidxNew;
@@ -39,7 +39,7 @@ public class ArrayDeque<T> {
      * @item: item to be added of type T*/
     public void addFirst(T item) {
         if (findex == 0) {
-            resize(items.length * 2);
+            resize((size + 1) * 2);
         }
         items[findex - 1] = item;
         findex = findex - 1;
@@ -51,7 +51,7 @@ public class ArrayDeque<T> {
      * @item: item to be added of type T*/
     public void addLast(T item) {
         if ((findex + size) >= items.length) {
-            resize(items.length * 2);
+            resize((size + 1) * 2);
         }
         items[findex + size] = item;
         size = size + 1;
