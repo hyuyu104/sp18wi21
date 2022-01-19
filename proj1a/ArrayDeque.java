@@ -63,7 +63,7 @@ public class ArrayDeque<T> {
      * to save memory*/
     private void saveResize() {
         if (size / items.length < 0.25 & items.length >= 16) {
-            resize(size + 1);
+            resize((size + 1) * 2);
         }
     }
 
