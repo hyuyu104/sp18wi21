@@ -128,14 +128,7 @@ public class IntList {
             frontOfReversed = nextNodeToAdd;
             nextNodeToAdd = remainderOfOriginal;
         }
-        A = frontOfReversed;
-        return A;
-
-//        IntList reversedA = new IntList(A.first, null);
-//        for (IntList i = A.rest; i != null; i = i.rest) {
-//            reversedA = new IntList(i.first, reversedA);
-//        }
-//        return reversedA;
+        return frontOfReversed;
     }
 
 
