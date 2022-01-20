@@ -12,7 +12,7 @@ public class LinkedListDeque<T> implements Deque<T> {
          * @p: reference to the previous Node
          * @n: reference to the next Node
          */
-        public Node(Node p, T i, Node n) {
+        private Node(Node p, T i, Node n) {
             prev = p;
             item = i;
             next = n;
