@@ -1,10 +1,7 @@
 package byog.Core;
-
 import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
-
-import java.awt.*;
 import java.util.Random;
 
 /**
@@ -77,7 +74,7 @@ public class Game {
      * @return the world with the new hallway
      * @throws IllegalArgumentException if fails to add the hallway
      */
-    private TETile[][] drawOneHallWay(TETile[][] world, int d) throws IllegalArgumentException{
+    private TETile[][] drawOneHallWay(TETile[][] world, int d) throws IllegalArgumentException {
         Position newP = new Position(0, 0);
         int newW, newH;
         switch (d) {
@@ -125,6 +122,7 @@ public class Game {
             case 0:
                 hallWayW = 3;
                 hallWayH = rand.nextInt(smaller);
+                break;
             default:
                 hallWayW = rand.nextInt(smaller);
                 hallWayH = 3;
@@ -172,8 +170,11 @@ public class Game {
      */
     private TETile[][] drawRandomMap(TETile[][] world) {
         int num = HEIGHT * WIDTH / 25;
-        if (HEIGHT > WIDTH) smaller = WIDTH;
-        else smaller = HEIGHT;
+        if (HEIGHT > WIDTH) {
+            smaller = WIDTH;
+        } else{
+            smaller = HEIGHT;
+        }
         world = drawRandomHallways(world, num);
         world = drawRandomRooms(world, num / 10);
         return world;
@@ -192,24 +193,17 @@ public class Game {
      * @return the 2D TETile[][] representing the state of the world
      */
     public TETile[][] playWithInputString(String input) {
-        // TODO: Fill out this method to run the game using the input passed in,
-        // and return a 2D tile representation of the world that would have been
-        // drawn if the same inputs had been given to playWithKeyboard().
         String seed = input.substring(input.indexOf('N') + 1, input.indexOf('S'));
         rand = new Random(Integer.parseInt(seed));
         ter.initialize(WIDTH, HEIGHT);
         TETile[][] finalWorldFrame = new TETile[WIDTH][HEIGHT];
         for (int i = 0; i < WIDTH; i++) {
-            for (int j = 0; j < HEIGHT; j++)
+            for (int j = 0; j < HEIGHT; j++) {
                 finalWorldFrame[i][j] = Tileset.NOTHING;
+            }
         }
         finalWorldFrame = drawRandomMap(finalWorldFrame);
         ter.renderFrame(finalWorldFrame);
         return finalWorldFrame;
-    }
-
-    public static void main(String[] args) {
-        Game game = new Game();
-        game.playWithInputString("N2S");
     }
 }
