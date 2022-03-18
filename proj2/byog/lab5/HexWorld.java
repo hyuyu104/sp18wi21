@@ -54,7 +54,7 @@ public class HexWorld {
      * @return TETile object
      */
     private static TETile randomTile() {
-        int tileNum = RANDOM.nextInt(6);
+        int tileNum = RANDOM.nextInt(7);
         switch (tileNum) {
             case 0: return Tileset.WALL;
             case 1: return Tileset.FLOWER;

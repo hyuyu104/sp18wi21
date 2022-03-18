@@ -21,10 +21,11 @@ public class MemoryGameSolution {
     public static void main(String[] args) {
         if (args.length < 1) {
             System.out.println("Please enter a seed");
-            return;
+//            return;
         }
 
-        long seed = Long.parseLong(args[0]);
+//        long seed = Long.parseLong(args[0]);
+        long seed = 1;
         MemoryGameSolution game = new MemoryGameSolution(40, 40, seed);
         game.startGame();
     }
