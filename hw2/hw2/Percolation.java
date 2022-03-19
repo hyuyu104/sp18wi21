@@ -7,6 +7,7 @@ public class Percolation {
     private int N;
     private boolean[] grid;
     private WeightedQuickUnionUF wquuf;
+    private WeightedQuickUnionUF wquuf2;
 
     /**
      * Constructor of Percolation, all initial values set to false
@@ -20,6 +21,7 @@ public class Percolation {
         this.N = N;
         grid = new boolean[N * N];
         wquuf = new WeightedQuickUnionUF(N * N + 2);
+        wquuf2 = new WeightedQuickUnionUF(N * N + 1);
         openSites = 0;
     }
 
@@ -45,6 +47,7 @@ public class Percolation {
         if (neighborIdx >= 0 && neighborIdx < grid.length) {
             if (grid[neighborIdx]) {
                 wquuf.union(currIdx, neighborIdx);
+                wquuf2.union(currIdx, neighborIdx);
             }
         }
     }
@@ -60,9 +63,32 @@ public class Percolation {
     private void connectToTopOrBottom(int currIdx) {
         if (currIdx < N) {
             wquuf.union(currIdx, grid.length);
+            wquuf2.union(currIdx, grid.length);
         }
         if (currIdx >= N * (N - 1)) {
             wquuf.union(currIdx, grid.length + 1);
+        }
+    }
+
+    /**
+     * Helps to check neighbors and connect all opened ones
+     *
+     * @param row the row index of the current site
+     * @param col the column index of the current site
+     */
+    private void connectAllNeighbors(int row, int col) {
+        int currIdx = xyTo1d(row, col);
+        if (row - 1 >= 0) {
+            neighborConnect(currIdx, xyTo1d(row - 1, col));
+        }
+        if (row + 1 < N) {
+            neighborConnect(currIdx, xyTo1d(row + 1, col));
+        }
+        if (col - 1 >= 0) {
+            neighborConnect(currIdx, xyTo1d(row, col - 1));
+        }
+        if (col + 1 < N) {
+            neighborConnect(currIdx, xyTo1d(row, col + 1));
         }
     }
 
@@ -81,16 +107,7 @@ public class Percolation {
         }
         grid[currIdx] = true;
         connectToTopOrBottom(currIdx);
-
-        int leftIdx = xyTo1d(row - 1, col);
-        neighborConnect(currIdx, leftIdx);
-        int rightIdx = xyTo1d(row + 1, col);
-        neighborConnect(currIdx, rightIdx);
-        int topIdx = xyTo1d(row, col - 1);
-        neighborConnect(currIdx, topIdx);
-        int bottomIdx = xyTo1d(row, col + 1);
-        neighborConnect(currIdx, bottomIdx);
-
+        connectAllNeighbors(row, col);
         openSites += 1;
     }
 
@@ -121,7 +138,7 @@ public class Percolation {
         if (idx >= grid.length || idx < 0) {
             throw new IndexOutOfBoundsException("invalid row and column number");
         }
-        return wquuf.connected(idx, grid.length);
+        return wquuf2.connected(idx, grid.length);
     }
 
 

@@ -33,10 +33,16 @@ public class PercolationTester {
 
         per.open(2, 2);
         assertFalse(per.isFull(2, 2));
-        per.open(2, 1);
+        per.open(1, 2);
         assertTrue(per.isFull(2, 2));
 
-        assertEquals(per.numberOfOpenSites(), 4);
+        // back wash
+        per.open(2, 0);
+        assertFalse(per.isFull(2, 0));
+        per.open(1, 0);
+        assertTrue(per.isFull(2, 0));
+
+        assertEquals(per.numberOfOpenSites(), 6);
     }
 
     @Test
