@@ -105,6 +105,9 @@ public class Percolation {
         if (currIdx >= grid.length || currIdx < 0) {
             throw new IndexOutOfBoundsException("invalid row and column number");
         }
+        if (isOpen(row, col)) {
+            return;
+        }
         grid[currIdx] = true;
         connectToTopOrBottom(currIdx);
         connectAllNeighbors(row, col);
